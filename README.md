@@ -26,7 +26,7 @@ spring web / lombok / spring data jpa / h2 database / PostgreSQL Driver
  - 테스트
    - 로그인 확인 / "POST /api/v1/login"
    - 세션으로 로그인 내 정보 확인. / "GET /api/v1/users/{id}"
-
+ - 다중 서버에 대한 세션관리를 위한 redis 고려..
 #### 음음음..??? 
 |users|
 |-----|
