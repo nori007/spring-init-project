@@ -17,3 +17,34 @@ spring web / lombok / spring data jpa / h2 database / PostgreSQL Driver
  - domain.service: 비지니스 로직
  - global: 유틸성.
  - infra: 유틸성 이외의 인프라 관련.
+
+
+### 로그인
+ - 스프링 시큐리티 추가
+ - 세션 기반
+ - 로그인 후, 세션 리턴받음. 해당 세션으로 API 동작하는지 확인.
+ - 테스트
+   - 로그인 확인 / "POST /api/v1/login"
+   - 세션으로 로그인 내 정보 확인. / "GET /api/v1/users/{id}"
+
+#### 음음음..??? 
+|users|
+|-----|
+|Lang id|
+|String login_id|
+|String password|
+|String name|
+|String email|
+
+|user_oauth|
+|-----------|
+|users.id   |
+|oauths.id  |
+
+|oauths|
+|------|
+|Lang id|
+|emnu type|
+|String secret_key|
+ - users_oauth / oauths 사용이될까?? 필요한걸까?? 아직 잘모르겠음.
+
