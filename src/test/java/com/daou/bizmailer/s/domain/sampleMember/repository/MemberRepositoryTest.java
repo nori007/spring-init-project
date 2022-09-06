@@ -1,6 +1,6 @@
-package com.example.demo.sample.repository;
+package com.daou.bizmailer.s.domain.sampleMember.repository;
 
-import com.example.demo.sample.entity.Member;
+import com.daou.bizmailer.s.domain.sampleMember.entity.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

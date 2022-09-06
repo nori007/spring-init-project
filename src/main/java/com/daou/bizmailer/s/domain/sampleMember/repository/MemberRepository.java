@@ -1,6 +1,6 @@
-package com.example.demo.sample.repository;
+package com.daou.bizmailer.s.domain.sampleMember.repository;
 
-import com.example.demo.sample.entity.Member;
+import com.daou.bizmailer.s.domain.sampleMember.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
