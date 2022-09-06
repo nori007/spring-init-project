@@ -21,12 +21,13 @@ spring web / lombok / spring data jpa / h2 database / PostgreSQL Driver
 
 ### 로그인
  - 스프링 시큐리티 추가
- - 세션 기반
+ - jwt 기반으로..
  - 로그인 후, 세션 리턴받음. 해당 세션으로 API 동작하는지 확인.
  - 테스트
    - 로그인 확인 / "POST /api/v1/login"
    - 세션으로 로그인 내 정보 확인. / "GET /api/v1/users/{id}"
- - 다중 서버에 대한 세션관리를 위한 redis 고려..
+ - 다중 서버에 대한 세션관리를 위한 redis 고려,
+
 #### 음음음..??? 
 |users|
 |-----|
