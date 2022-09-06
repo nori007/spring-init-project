@@ -1,4 +1,4 @@
-package com.daou.bizmailer.s.domain.sampleMember.model;
+package com.nori.sample.domain.sampleMember.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

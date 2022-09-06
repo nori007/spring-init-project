@@ -1,6 +1,6 @@
-package com.daou.bizmailer.s.domain.sampleMember.repository;
+package com.nori.sample.domain.sampleMember.repository;
 
-import com.daou.bizmailer.s.domain.sampleMember.entity.Member;
+import com.nori.sample.domain.sampleMember.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

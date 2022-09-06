@@ -1,4 +1,4 @@
-package com.daou.bizmailer.s.global;
+package com.nori.sample.global;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

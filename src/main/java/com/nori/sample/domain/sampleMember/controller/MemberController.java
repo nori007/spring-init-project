@@ -1,6 +1,6 @@
-package com.daou.bizmailer.s.domain.sampleMember.controller;
+package com.nori.sample.domain.sampleMember.controller;
 
-import com.daou.bizmailer.s.domain.sampleMember.model.MemberModel;
+import com.nori.sample.domain.sampleMember.model.MemberModel;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

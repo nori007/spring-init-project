@@ -1,4 +1,4 @@
-package com.daou.bizmailer.s.domain.sampleMember.entity;
+package com.nori.sample.domain.sampleMember.entity;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;

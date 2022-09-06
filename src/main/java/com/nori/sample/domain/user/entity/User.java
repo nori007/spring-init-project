@@ -1,6 +1,6 @@
-package com.daou.bizmailer.s.domain.user.entity;
+package com.nori.sample.domain.user.entity;
 
-import com.daou.bizmailer.s.global.BaseEntity;
+import com.nori.sample.global.BaseEntity;
 
 import javax.persistence.Entity;
 
