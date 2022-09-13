@@ -29,23 +29,39 @@ spring web / lombok / spring data jpa / h2 database / PostgreSQL Driver
  - 다중 서버에 대한 세션관리를 위한 redis 고려,
 
 #### 음음음..??? 
-|users|
-|-----|
-|Lang id|
-|String login_id|
-|String password|
-|String name|
-|String email|
 
-|user_oauth|
-|-----------|
-|users.id   |
-|oauths.id  |
+[comment]: <> (|users|)
 
-|oauths|
-|------|
-|Lang id|
-|emnu type|
+[comment]: <> (|-----|)
+
+[comment]: <> (|Lang id|)
+
+[comment]: <> (|String login_id|)
+
+[comment]: <> (|String password|)
+
+[comment]: <> (|String name|)
+
+[comment]: <> (|String email|)
+
+[comment]: <> (|user_oauth|)
+
+[comment]: <> (|-----------|)
+
+[comment]: <> (|users.id   |)
+
+[comment]: <> (|oauths.id  |)
+
+[comment]: <> (|oauths|)
+
+[comment]: <> (|------|)
+
+[comment]: <> (|Lang id|)
+
+[comment]: <> (|emnu type|)
 |String secret_key|
  - users_oauth / oauths 사용이될까?? 필요한걸까?? 아직 잘모르겠음.
 
+참고
+ - https://velog.io/@shinmj1207/Spring-Spring-Security-JWT-%EB%A1%9C%EA%B7%B8%EC%9D%B8
+ - https://bcp0109.tistory.com/301

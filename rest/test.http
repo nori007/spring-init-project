@@ -1,0 +1,25 @@
+# Request
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "loginId": "testId10",
+  "password": "1234",
+  "name": "test-name",
+  "email": "test@test.com"
+}
+
+###
+# Request
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "loginId": "testId10",
+  "password": "1234"
+}
+
+###
+# Request
+GET http://localhost:8080/users/me
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0SWQxMCIsImF1dGgiOiJPSyIsImlhdCI6MTY2MzAzNTQ3NSwiZXhwIjoxNjYzMDM3Mjc1fQ.QHNlYk9xNfYDXaPgWpTth26CzbbXQeynI9XFBNc85jI8SkUpkRThUugUDIVHfMLuZVPjrljyCMjIRWZYbD6rOg
