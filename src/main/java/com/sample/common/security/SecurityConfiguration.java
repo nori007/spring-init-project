@@ -2,7 +2,7 @@ package com.sample.common.security;
 
 import com.sample.common.jwt.JwtAccessDeniedHandler;
 import com.sample.common.jwt.JwtAuthenticationEntryPoint;
-import com.sample.common.jwt.JwtTokenProvider;
+import com.sample.common.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtUtil jwtUtil;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtSecurityConfig(jwtTokenProvider));
+                .apply(new JwtSecurityConfig(jwtUtil));
     }
 
     @Bean

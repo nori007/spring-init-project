@@ -2,14 +2,13 @@ package com.sample.domain.member.service;
 
 import com.sample.common.security.SecurityUtil;
 import com.sample.domain.member.dto.MemberResponseDto;
-import com.sample.domain.member.entity.Member;
 import com.sample.domain.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class MemeberService {
+public class MemberService {
 
     @Autowired
     MemberRepository memberRepository;

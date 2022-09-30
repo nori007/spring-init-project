@@ -1,6 +1,6 @@
 package com.sample.common.filter;
 
-import com.sample.common.jwt.JwtTokenProvider;
+import com.sample.common.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -26,8 +26,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String jwt = getJwtFromRequest(request);
 
-        if (StringUtils.isNotEmpty(jwt) && jwtTokenProvider.validateToken(jwt)) {
-            Authentication authentication = jwtTokenProvider.getAuthentication(jwt);
+        if (StringUtils.isNotEmpty(jwt) && jwtUtil.validateToken(jwt)) {
+            Authentication authentication = jwtUtil.getAuthentication(jwt);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

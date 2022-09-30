@@ -6,11 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import java.util.Set;
+import javax.persistence.Table;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "member")
 public class Member extends BaseEntity {
 
     private String loginId;

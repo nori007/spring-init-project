@@ -16,11 +16,6 @@ public class AuthController {
 
     private final AuthService authservice;
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("ok");
-    }
-
     @PostMapping("/signup")
     public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto memberRequestDto) {
         return ResponseEntity.ok(authservice.signup(memberRequestDto));

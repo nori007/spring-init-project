@@ -1,4 +1,4 @@
-package com.sample.common.jwt.service;
+package com.sample.common.jwt;
 
 import com.sample.domain.member.entity.Member;
 import com.sample.domain.member.repository.MemberRepository;
@@ -15,21 +15,15 @@ import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetails implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-        Member member = memberRepository.findByLoginId(loginId).orElseThrow(() -> new UsernameNotFoundException(loginId + " - not found email"));
-        UserDetails userDetails = this.createUserDetails(member);
-
-        return userDetails;
-
-
-//        return userRepository.findByLoginId(loginId)
-//                .map(this::createUserDetails)
-//                .orElseThrow(() -> new UsernameNotFoundException(loginId + " - not found email"));
+        return memberRepository.findByLoginId(loginId)
+                .map(this::createUserDetails)
+                .orElseThrow(() -> new UsernameNotFoundException(loginId + " - not found member"));
     }
 
     private UserDetails createUserDetails(Member member) {

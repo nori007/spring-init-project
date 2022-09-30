@@ -2,7 +2,7 @@ package com.sample.domain.member.controller;
 
 import com.sample.domain.member.dto.MemberRequestDto;
 import com.sample.domain.member.dto.MemberResponseDto;
-import com.sample.domain.member.service.MemeberService;
+import com.sample.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,36 +10,36 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserController {
+public class MemberController {
 
-    private final MemeberService memeberService;
+    private final MemberService memberService;
 
     @RequestMapping(method = {RequestMethod.POST})
-    public MemberResponseDto createUser(@RequestBody MemberRequestDto memberRequestDto) {
+    public MemberResponseDto createMember(@RequestBody MemberRequestDto memberRequestDto) {
         return new MemberResponseDto();
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
-    public String removeMUser(@PathVariable Long id) {
+    public String removeMember(@PathVariable Long id) {
         return "OK";
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
-    public MemberResponseDto getUser(@PathVariable Long id) {
+    public MemberResponseDto getMember(@PathVariable Long id) {
         return new MemberResponseDto();
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = {RequestMethod.PUT})
-    public MemberResponseDto updateUser(@PathVariable Long id, @RequestBody MemberRequestDto memberRequestDto) {
+    public MemberResponseDto updateMember(@PathVariable Long id, @RequestBody MemberRequestDto memberRequestDto) {
         return new MemberResponseDto();
     }
 
     @ResponseBody
     @RequestMapping(value = "/me", method = {RequestMethod.GET})
     public ResponseEntity<MemberResponseDto> getCurrentUser() {
-        return ResponseEntity.ok(memeberService.getCurrentUserInfo());
+        return ResponseEntity.ok(memberService.getCurrentUserInfo());
     }
 }

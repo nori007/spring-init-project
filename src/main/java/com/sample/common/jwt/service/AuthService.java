@@ -1,31 +1,25 @@
 package com.sample.common.jwt.service;
 
-import com.sample.common.jwt.JwtTokenProvider;
+import com.sample.common.jwt.JwtUtil;
 import com.sample.common.jwt.dto.TokenRequestDto;
-import com.sample.common.jwt.entity.RefreshToken;
 import com.sample.common.jwt.dto.TokenResponseDto;
+import com.sample.common.jwt.entity.RefreshToken;
 import com.sample.common.jwt.repository.RefreshTokenRepository;
+import com.sample.domain.member.dto.MemberRequestDto;
 import com.sample.domain.member.dto.MemberResponseDto;
 import com.sample.domain.member.entity.Member;
-import com.sample.domain.member.dto.MemberRequestDto;
 import com.sample.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
@@ -34,20 +28,23 @@ public class AuthService {
             throw new RuntimeException("이메일 중복");
         }
 
-        Member member = memberRequestDto.toUser(passwordEncoder);
+        Member member = memberRequestDto.toMember(passwordEncoder);
 
         return MemberResponseDto.of(memberRepository.save(member));
     }
 
     @Transactional
     public TokenResponseDto login(MemberRequestDto memberRequestDto) {
+        Member member = memberRepository.findByLoginId(memberRequestDto.getLoginId()).orElseThrow(() -> new RuntimeException("error"));
 
-        UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        TokenResponseDto tokenResponseDto = jwtTokenProvider.generateToken(authentication);
+        if (!passwordEncoder.matches(memberRequestDto.getPassword(), member.getPassword())) {
+            throw new RuntimeException("password error");
+        }
+
+        TokenResponseDto tokenResponseDto = JwtUtil.create(memberRequestDto.getLoginId(), memberRequestDto.getName());
 
         RefreshToken refreshToken = RefreshToken.builder()
-                .key(authentication.getName())
+                .key(memberRequestDto.getLoginId())
                 .value(tokenResponseDto.getRefreshToken())
                 .build();
 
@@ -56,22 +53,23 @@ public class AuthService {
         return tokenResponseDto;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public TokenResponseDto reissue(TokenRequestDto tokenRequestDto) {
-
-        if (!jwtTokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
+        
+        String loginId = JwtUtil.getUserId(tokenRequestDto.getRefreshToken());
+        if (loginId.isEmpty()) {
             throw new RuntimeException("refresh token is not valid");
         }
-        
-        Authentication authentication = jwtTokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
-        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
+
+        RefreshToken refreshToken = refreshTokenRepository.findByKey(loginId)
                 .orElseThrow(() -> new RuntimeException("logout user"));
 
         if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("token is not valid");
         }
 
-        TokenResponseDto newTokenResponseDto = jwtTokenProvider.generateToken(authentication);
+        Member member = memberRepository.findByLoginId(loginId).orElseThrow(() -> new RuntimeException("not found user"));
+        TokenResponseDto newTokenResponseDto = JwtUtil.create(member.getLoginId(), member.getName());
 
         RefreshToken newRefreshToken = refreshToken.updateValue(newTokenResponseDto.getRefreshToken());
         refreshTokenRepository.save(newRefreshToken);
