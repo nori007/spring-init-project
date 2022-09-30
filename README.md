@@ -27,41 +27,12 @@ spring web / lombok / spring data jpa / h2 database / PostgreSQL Driver
    - 로그인 확인 / "POST /api/v1/login"
    - 세션으로 로그인 내 정보 확인. / "GET /api/v1/users/{id}"
  - 다중 서버에 대한 세션관리를 위한 redis 고려,
-
-#### 음음음..??? 
-
-[comment]: <> (|users|)
-
-[comment]: <> (|-----|)
-
-[comment]: <> (|Lang id|)
-
-[comment]: <> (|String login_id|)
-
-[comment]: <> (|String password|)
-
-[comment]: <> (|String name|)
-
-[comment]: <> (|String email|)
-
-[comment]: <> (|user_oauth|)
-
-[comment]: <> (|-----------|)
-
-[comment]: <> (|users.id   |)
-
-[comment]: <> (|oauths.id  |)
-
-[comment]: <> (|oauths|)
-
-[comment]: <> (|------|)
-
-[comment]: <> (|Lang id|)
-
-[comment]: <> (|emnu type|)
-|String secret_key|
- - users_oauth / oauths 사용이될까?? 필요한걸까?? 아직 잘모르겠음.
+ 
+### 해야될것
+ - 스웨거 API 문서 붙이기.
+ - 개발 / 배포 빌드 유형별 설정파일 처리
 
 참고
  - https://velog.io/@shinmj1207/Spring-Spring-Security-JWT-%EB%A1%9C%EA%B7%B8%EC%9D%B8
  - https://bcp0109.tistory.com/301
+
