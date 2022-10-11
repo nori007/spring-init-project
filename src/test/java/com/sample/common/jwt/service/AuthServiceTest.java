@@ -1,5 +1,6 @@
 package com.sample.common.jwt.service;
 
+import com.sample.common.excption.InvalidArgumentException;
 import com.sample.common.jwt.dto.TokenResponseDto;
 import com.sample.common.jwt.entity.RefreshToken;
 import com.sample.common.jwt.repository.RefreshTokenRepository;
@@ -14,11 +15,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
@@ -79,17 +82,20 @@ public class AuthServiceTest {
 
     @Test
     @DisplayName("로그인 - 실패")
-    public void 로그인_실패() throws Exception{
+    public void 로그인_실패() {
         // given
         Member member = createMember();
         MemberRequestDto memberRequestDto = new MemberRequestDto("testLoginId", "1qaz2wsx#", "testName", "test@test.com");
         when(memberRepository.findByLoginId(any())).thenReturn(Optional.of(member));
-        when(passwordEncoder.matches(memberRequestDto.getPassword(), member.getPassword())).thenReturn(true);
+        when(passwordEncoder.matches(memberRequestDto.getPassword(), member.getPassword())).thenReturn(false);
 
-        // when & then
-        Assertions.assertThrows(RuntimeException.class, () -> {
-                TokenResponseDto tokenResponseDto = authService.login(memberRequestDto);
+        // when
+        Throwable exception = Assertions.assertThrows(RuntimeException.class, () -> {
+            authService.login(memberRequestDto);
         });
+
+        // then
+        Assertions.assertEquals(true, exception instanceof InvalidArgumentException);
     }
 
 
