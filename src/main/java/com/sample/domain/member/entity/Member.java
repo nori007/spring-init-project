@@ -1,6 +1,6 @@
 package com.sample.domain.member.entity;
 
-import com.sample.common.entity.BaseEntity;
+import com.sample.common.base.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

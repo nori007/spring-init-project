@@ -1,9 +1,13 @@
 package com.sample.common.jwt.service;
 
+import com.sample.common.excption.BadRequestException;
+import com.sample.common.excption.InvalidArgumentException;
 import com.sample.common.jwt.JwtUtil;
 import com.sample.common.jwt.dto.TokenRequestDto;
 import com.sample.common.jwt.dto.TokenResponseDto;
 import com.sample.common.jwt.entity.RefreshToken;
+import com.sample.common.jwt.excption.DuplicatedEmailExcption;
+import com.sample.common.jwt.excption.InvalidTokenException;
 import com.sample.common.jwt.repository.RefreshTokenRepository;
 import com.sample.domain.member.dto.MemberRequestDto;
 import com.sample.domain.member.dto.MemberResponseDto;
@@ -23,9 +27,9 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
+    public MemberResponseDto signup(MemberRequestDto memberRequestDto) throws DuplicatedEmailExcption{
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            throw new RuntimeException("이메일 중복");
+            throw new DuplicatedEmailExcption(memberRequestDto.getEmail());
         }
 
         Member member = memberRequestDto.toMember(passwordEncoder);
@@ -35,10 +39,11 @@ public class AuthService {
 
     @Transactional
     public TokenResponseDto login(MemberRequestDto memberRequestDto) {
-        Member member = memberRepository.findByLoginId(memberRequestDto.getLoginId()).orElseThrow(() -> new RuntimeException("error"));
+        Member member = memberRepository.findByLoginId(memberRequestDto.getLoginId())
+                .orElseThrow(() -> new InvalidArgumentException(String.format("loginId: $s", memberRequestDto.getLoginId())));
 
         if (!passwordEncoder.matches(memberRequestDto.getPassword(), member.getPassword())) {
-            throw new RuntimeException("password error");
+            throw new InvalidArgumentException(String.format("loginId: $s", memberRequestDto.getLoginId()));
         }
 
         TokenResponseDto tokenResponseDto = JwtUtil.create(memberRequestDto.getLoginId(), memberRequestDto.getName());

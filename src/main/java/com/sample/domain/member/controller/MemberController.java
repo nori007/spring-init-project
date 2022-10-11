@@ -15,26 +15,26 @@ public class MemberController {
     private final MemberService memberService;
 
     @RequestMapping(method = {RequestMethod.POST})
-    public MemberResponseDto createMember(@RequestBody MemberRequestDto memberRequestDto) {
-        return new MemberResponseDto();
+    public ResponseEntity<MemberResponseDto> createMember(@RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseEntity.ok(new MemberResponseDto());
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
-    public String removeMember(@PathVariable Long id) {
-        return "OK";
+    public ResponseEntity<String> removeMember(@PathVariable Long id) {
+        return ResponseEntity.ok(id.toString());
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
-    public MemberResponseDto getMember(@PathVariable Long id) {
-        return new MemberResponseDto();
+    public ResponseEntity<MemberResponseDto> getMember(@PathVariable Long id) {
+        return ResponseEntity.ok(new MemberResponseDto());
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = {RequestMethod.PUT})
-    public MemberResponseDto updateMember(@PathVariable Long id, @RequestBody MemberRequestDto memberRequestDto) {
-        return new MemberResponseDto();
+    public ResponseEntity<MemberResponseDto> updateMember(@PathVariable Long id, @RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseEntity.ok(new MemberResponseDto());
     }
 
     @ResponseBody

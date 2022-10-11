@@ -45,7 +45,7 @@ public class AuthServiceTest {
     
     @Test
     @DisplayName("회원가입")
-    public void 가입() {
+    public void 가입() throws Exception{
         // given
         Member member = createMember();
         MemberRequestDto memberRequestDto = new MemberRequestDto("testLoginId", "1qaz2wsx#", "testName", "test@test.com");

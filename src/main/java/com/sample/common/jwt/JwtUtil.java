@@ -1,6 +1,7 @@
 package com.sample.common.jwt;
 
 import com.sample.common.jwt.dto.TokenResponseDto;
+import com.sample.common.jwt.excption.TokenExpiredException;
 import com.sample.domain.member.dto.MemberRequestDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
 public class JwtUtil {
 
     private static final String JWT_SECRET = "djfakskrlekfudiEhaucqkadmfejwltpdnjdisjfqhroehlfRksjfqhroehlfRkaksskrpehlfRkaksskrpehlfRkdkdkdk";
-    private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
     private static final String ISS = "DAOU";
     private static final String SUB = "{project_name}";
@@ -64,6 +64,7 @@ public class JwtUtil {
             log.error("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
             log.error("Expired JWT token");
+            throw new TokenExpiredException(token);
         } catch (UnsupportedJwtException ex) {
             log.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
