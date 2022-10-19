@@ -1,13 +1,11 @@
 package com.sample.common.jwt.service;
 
-import com.sample.common.excption.BadRequestException;
 import com.sample.common.excption.InvalidArgumentException;
 import com.sample.common.jwt.JwtUtil;
 import com.sample.common.jwt.dto.TokenRequestDto;
 import com.sample.common.jwt.dto.TokenResponseDto;
 import com.sample.common.jwt.entity.RefreshToken;
 import com.sample.common.jwt.excption.DuplicatedEmailExcption;
-import com.sample.common.jwt.excption.InvalidTokenException;
 import com.sample.common.jwt.repository.RefreshTokenRepository;
 import com.sample.domain.member.dto.MemberRequestDto;
 import com.sample.domain.member.dto.MemberResponseDto;
@@ -40,10 +38,10 @@ public class AuthService {
     @Transactional
     public TokenResponseDto login(MemberRequestDto memberRequestDto) {
         Member member = memberRepository.findByLoginId(memberRequestDto.getLoginId())
-                .orElseThrow(() -> new InvalidArgumentException(String.format("loginId: $s", memberRequestDto.getLoginId())));
+                .orElseThrow(() -> new InvalidArgumentException(String.format("loginId: %s", memberRequestDto.getLoginId())));
 
         if (!passwordEncoder.matches(memberRequestDto.getPassword(), member.getPassword())) {
-            throw new InvalidArgumentException(String.format("loginId: $s", memberRequestDto.getLoginId()));
+            throw new InvalidArgumentException(String.format("password fail - loginId: %s", memberRequestDto.getLoginId()));
         }
 
         TokenResponseDto tokenResponseDto = JwtUtil.create(memberRequestDto.getLoginId(), memberRequestDto.getName());

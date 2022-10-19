@@ -36,9 +36,10 @@ spring web / lombok / spring data jpa / h2 database / PostgreSQL Driver
  - 스웨거 API 문서 붙이기.
  - 로컬 / 개발 / 배포 빌드 유형별 설정파일 처리
  - ~~도메인별(또는 공통) exception 처리~~
- - h2 -> mariadb 변경
+ - ~~h2 -> mariadb 변경~~
  - infra.{radis} - 레디스 관련 추가
  - ~~api 공통화 처리~~
+ - 통합테스트 => 컨트롤러단 테스트 / 파일 새로만들어서 (controllerTest: 단위테스트 / controllerIntegratedTest: 통합테스트 
 
 
 ## 백엔드 개발시 유의 사항
@@ -86,5 +87,3 @@ spring web / lombok / spring data jpa / h2 database / PostgreSQL Driver
      - feature -> master merge시 PR 진행.
  - 깃 사용법을 모른다?
    - https://learngitbranching.js.org/?locale=ko 참고.
-    
-   

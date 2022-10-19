@@ -1,5 +1,6 @@
 package com.sample.common.jwt.entity;
 
+import com.sample.common.base.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "refresh_token")
-public class RefreshToken{
+public class RefreshToken {
 
     @Id
     @Column(name = "rt_key")

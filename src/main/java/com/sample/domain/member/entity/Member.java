@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -14,12 +15,16 @@ import javax.persistence.Table;
 @Table(name = "member")
 public class Member extends BaseEntity {
 
+    @Column(name="loginId")
     private String loginId;
 
+    @Column(name="password")
     private String password;
 
+    @Column(name="name")
     private String name;
 
+    @Column(name="email")
     private String email;
 
     @Builder
