@@ -1,26 +1,52 @@
 package com.sample.common.base;
 
-import com.sample.common.excption.BadRequestException;
-import com.sample.common.excption.InvalidArgumentException;
-import com.sample.common.excption.NotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-public class BaseControllerException {
+import java.nio.file.AccessDeniedException;
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<?> badRequestHandler(Exception ex) {
-        return new ResponseEntity<>(String.format("bad request - %s", ex.getMessage()), HttpStatus.BAD_REQUEST);
+@ControllerAdvice
+public class BaseControllerException extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ApiExceptionEntity> exceptionHandler(BaseException error) {
+        return ResponseEntity
+                .status(error.getError().getStatus())
+                .body(ApiExceptionEntity.builder()
+                        .errorCode(error.getError().getCode())
+                        .errorMessage(error.getMessage().equals("") ? error.getError().getMessage() : error.getMessage())
+                        .build());
     }
 
-    @ExceptionHandler(InvalidArgumentException.class)
-    public ResponseEntity<?> invalidArgumentHandler(Exception ex) {
-        return new ResponseEntity<>(String.format("invalid argument - %s", ex.getMessage()), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiExceptionEntity> exceptionHandler(RuntimeException error) {
+        return ResponseEntity
+                .status(ErrorCodeEnum.DEFAULT_RUNTIME_EXCEPTION.getStatus())
+                .body(ApiExceptionEntity.builder()
+                        .errorCode(ErrorCodeEnum.DEFAULT_RUNTIME_EXCEPTION.getCode())
+                        .errorMessage(error.getMessage())
+                        .build());
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<?> notFoundHandler(Exception ex) {
-        return new ResponseEntity<>(String.format("not found - %s", ex.getMessage()), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiExceptionEntity> exceptionHandler(AccessDeniedException error) {
+        return ResponseEntity
+                .status(ErrorCodeEnum.DEFAULT_ACCESS_DENIED_EXCEPTION.getStatus())
+                .body(ApiExceptionEntity.builder()
+                        .errorCode(ErrorCodeEnum.DEFAULT_ACCESS_DENIED_EXCEPTION.getCode())
+                        .errorMessage(error.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiExceptionEntity> exceptionHandler(Exception error) {
+        return ResponseEntity
+                .status(ErrorCodeEnum.DEFAULT_INTERNAL_SERVER_ERROR.getStatus())
+                .body(ApiExceptionEntity.builder()
+                        .errorCode(ErrorCodeEnum.DEFAULT_INTERNAL_SERVER_ERROR.getCode())
+                        .errorMessage(error.getMessage())
+                        .build());
     }
 }

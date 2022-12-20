@@ -1,11 +1,12 @@
 package com.sample.common.jwt.service;
 
-import com.sample.common.excption.InvalidArgumentException;
+import com.sample.common.exception.InvalidArgumentException;
 import com.sample.common.jwt.JwtUtil;
 import com.sample.common.jwt.dto.TokenRequestDto;
 import com.sample.common.jwt.dto.TokenResponseDto;
 import com.sample.common.jwt.entity.RefreshToken;
 import com.sample.common.jwt.excption.DuplicatedEmailExcption;
+import com.sample.common.jwt.excption.NotFoundIdException;
 import com.sample.common.jwt.repository.RefreshTokenRepository;
 import com.sample.domain.member.dto.MemberRequestDto;
 import com.sample.domain.member.dto.MemberResponseDto;
@@ -25,9 +26,9 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public MemberResponseDto signup(MemberRequestDto memberRequestDto) throws DuplicatedEmailExcption{
+    public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            throw new DuplicatedEmailExcption(memberRequestDto.getEmail());
+            throw new DuplicatedEmailExcption(String.format("email: %s", memberRequestDto.getEmail()));
         }
 
         Member member = memberRequestDto.toMember(passwordEncoder);
@@ -38,7 +39,7 @@ public class AuthService {
     @Transactional
     public TokenResponseDto login(MemberRequestDto memberRequestDto) {
         Member member = memberRepository.findByLoginId(memberRequestDto.getLoginId())
-                .orElseThrow(() -> new InvalidArgumentException(String.format("loginId: %s", memberRequestDto.getLoginId())));
+                .orElseThrow(() -> new NotFoundIdException(String.format("loginId: %s", memberRequestDto.getLoginId())));
 
         if (!passwordEncoder.matches(memberRequestDto.getPassword(), member.getPassword())) {
             throw new InvalidArgumentException(String.format("password fail - loginId: %s", memberRequestDto.getLoginId()));

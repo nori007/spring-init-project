@@ -1,20 +1,15 @@
 package com.sample.common.jwt.excption;
 
-public class DuplicatedEmailExcption extends RuntimeException{
+import com.sample.common.base.BaseException;
+import com.sample.common.base.ErrorCodeEnum;
 
-    public DuplicatedEmailExcption(String message, Throwable t) {
-        super(message, t);
-    }
+public class DuplicatedEmailExcption extends BaseException {
 
     public DuplicatedEmailExcption(String message) {
-        super(message);
-    }
-
-    public DuplicatedEmailExcption(Throwable t) {
-        super(t);
+        super(ErrorCodeEnum.JWT_DUPLICATED_EMAIL_EXCEPTION, message);
     }
 
     public DuplicatedEmailExcption() {
-        super("Duplicated Email Exception");
+        super(ErrorCodeEnum.JWT_DUPLICATED_EMAIL_EXCEPTION);
     }
 }

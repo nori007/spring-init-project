@@ -1,8 +1,6 @@
 package com.sample.common.security;
 
-import com.sample.common.jwt.JwtAccessDeniedHandler;
-import com.sample.common.jwt.JwtAuthenticationEntryPoint;
-import com.sample.common.jwt.JwtUtil;
+import com.sample.common.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -22,19 +21,10 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final JwtUtil jwtUtil;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-                .and()
                 .headers()
                 .frameOptions()
                 .sameOrigin()
@@ -46,8 +36,10 @@ public class SecurityConfiguration {
                 .antMatchers("/auth/**", "/swagger-ui.html", "/swagger/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtSecurityConfig(jwtUtil))
-                .and().build();
+                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .and()
+                .build();
     }
 
     @Bean

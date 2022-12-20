@@ -1,20 +1,15 @@
 package com.sample.common.jwt.excption;
 
-public class InvalidTokenException extends RuntimeException {
+import com.sample.common.base.BaseException;
+import com.sample.common.base.ErrorCodeEnum;
 
-    public InvalidTokenException(String message, Throwable t) {
-        super(message, t);
-    }
+public class InvalidTokenException extends BaseException {
 
     public InvalidTokenException(String message) {
-        super(message);
-    }
-
-    public InvalidTokenException(Throwable t) {
-        super(t);
+        super(ErrorCodeEnum.JWT_INVALID_TOKEN_EXCEPTION, message);
     }
 
     public InvalidTokenException() {
-        super("Invalid Token Excption");
+        super(ErrorCodeEnum.JWT_INVALID_TOKEN_EXCEPTION);
     }
 }

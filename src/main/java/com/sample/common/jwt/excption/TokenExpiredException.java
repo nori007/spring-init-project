@@ -1,20 +1,13 @@
 package com.sample.common.jwt.excption;
 
-public class TokenExpiredException extends RuntimeException {
+import com.sample.common.base.BaseException;
+import com.sample.common.base.ErrorCodeEnum;
 
-    public TokenExpiredException(String message, Throwable t) {
-        super(message, t);
-    }
+public class TokenExpiredException extends BaseException {
 
-    public TokenExpiredException(String message) {
-        super(message);
-    }
-
-    public TokenExpiredException(Throwable t) {
-        super(t);
-    }
+    public TokenExpiredException(String message) { super(ErrorCodeEnum.JWT_TOKEN_EXPIRED_EXCEPTION, message); }
 
     public TokenExpiredException() {
-        super("Token Expired Excption");
+        super(ErrorCodeEnum.JWT_TOKEN_EXPIRED_EXCEPTION);
     }
 }
