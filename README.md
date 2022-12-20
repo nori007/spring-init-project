@@ -87,3 +87,9 @@ spring web / lombok / spring data jpa / h2 database / PostgreSQL Driver
      - feature -> master merge시 PR 진행.
  - 깃 사용법을 모른다?
    - https://learngitbranching.js.org/?locale=ko 참고.
+   
+
+### 에러 처리
+ - 추후 프론트쪽에 해당 ErrorCodeEnum 데이터만 던지면 되는 방향으로 진행
+ - com.sample.common.base.ErrorCodeEnum에서 모든 에러를 정의하고 있음.
+ - 각각의 도메인에서 ErrorCodeEnum의 값을 활용하여 각각 재정의 하면됨.
